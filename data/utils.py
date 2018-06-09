@@ -10,7 +10,6 @@ from librosa.feature import melspectrogram
 
 
 def get_spectrogram(path):
-    """Строим спектограмму из wav файла"""
     y, sr = load(path)
     S = melspectrogram(y, sr=sr, n_mels=100)
     log_S = amplitude_to_db(S, ref_power=np.max)
@@ -54,10 +53,6 @@ class VoicesData:
                     train.append((value_first, other_value, value_second))
 
         return train
-
-    def add_wav(self, user, word):
-        """Сохраняем спектограму для пользователя"""
-        self.base[user][word] = get_spectrogram('/tmp/voice2vec-data-add_wav-tempfile.wav')
 
     def get_train_for_user(self, user, shape=(100, 20)):
         """Трейн данные для одного пользователя"""

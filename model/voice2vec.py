@@ -41,6 +41,8 @@ class Voice2Vec(nn.Module):
         x = x.view((-1, 9 * 128))
         x = F.relu(self.fc1(x))
         x = F.tanh(self.fc2(x))
+        norm = torch.norm(x, dim=-1)
+        x /= norm[:, None]
         x = x.view((-1, 3, self.dim))
         return x
     
